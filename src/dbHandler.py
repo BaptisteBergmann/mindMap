@@ -60,6 +60,13 @@ def add_leaf(mapId: str,name: list[str], info = ''):
         nameToFetch = name.pop(0)
         row = query_db('SELECT * FROM nodes INNER JOIN nodes_link ON nodes_link.child_id = nodes.node_id WHERE parent_id=? AND name=?', (idToFetch,nameToFetch), one=True)
         if row is None: raise PathNotValid()
+        """
+        Might be an option to add path from start to end
+        if row is None:
+            cur.execute("INSERT INTO nodes VALUES (?,?,?,0)",(None, nameToFetch, info))
+            row = query_db('SELECT name, info FROM nodes WHERE node_id=last_insert_rowid()',one=True)
+            cur.execute("INSERT INTO nodes_link VALUES (?,?)",(idToFetch, cur.lastrowid))
+        """
         idToFetch = row['node_id']
     leafNameToAdd = name.pop(0)
     row = query_db('SELECT * FROM nodes INNER JOIN nodes_link ON nodes_link.child_id = nodes.node_id WHERE parent_id=? AND name=?', (idToFetch,leafNameToAdd), one=True)
