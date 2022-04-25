@@ -1,3 +1,10 @@
+'''
+Filename: test_dbHandler.py
+Path: ./tests/
+Created Date: Monday, April 25rd 2022, 10:41:08 am
+Author: Baptiste Bergmann
+'''
+
 import json
 import os
 from src.dbHandler import add_leaf, add_master_leaf, init_db, query_db

@@ -1,3 +1,10 @@
+'''
+Filename: conftest.py
+Path: ./tests/
+Created Date: Monday, April 25rd 2022, 10:41:08 am
+Author: Baptiste Bergmann
+'''
+
 import os
 import pytest
 from src.app import create_app

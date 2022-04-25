@@ -1,3 +1,10 @@
+'''
+Filename: error.py
+Path: ./src/
+Created Date: Monday, April 25rd 2022, 10:41:08 am
+Author: Baptiste Bergmann
+'''
+
 class CustomExeptions(Exception):
     code = 500
 

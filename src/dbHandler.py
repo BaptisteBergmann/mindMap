@@ -1,3 +1,10 @@
+'''
+Filename: dbHandler.py
+Path: ./src/
+Created Date: Monday, April 25rd 2022, 10:41:08 am
+Author: Baptiste Bergmann
+'''
+
 import sqlite3
 from flask import g
 
@@ -82,7 +89,7 @@ def add_leaf(mapId: str,name: list[str], info = ''):
     row = query_db('SELECT name, info FROM nodes WHERE node_id=last_insert_rowid()',one=True)
     cur.execute("INSERT INTO nodes_link VALUES (?,?)",(idToFetch, cur.lastrowid))
     con.commit()
-    
+
     return """{{"leaf": "{name}", "text": "{info}"}}""".format(
             name=row['name'], info=row['info'])
 

@@ -1,11 +1,10 @@
 '''
-Filename: /home/ar-desk/BNC/src/restControler.py
-Path: /home/ar-desk/BNC/src
-Created Date: Saturday, April 23rd 2022, 10:41:08 am
-Author: Ar-Desk
-
-Copyright (c) 2022 Your Company
+Filename: app.py
+Path: ./src/
+Created Date: Monday, April 25rd 2022, 10:41:08 am
+Author: Baptiste Bergmann
 '''
+
 from flask import Flask,request
 # from dbHandler import add_leaf, add_master_leaf, close_connection, get_leaf, init_db, print_leafs
 from src.error import CustomExeptions, LeafNotFound
