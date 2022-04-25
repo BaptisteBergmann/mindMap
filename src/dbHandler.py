@@ -46,14 +46,18 @@ def add_master_leaf(name: str):
     cur.execute("INSERT INTO nodes VALUES (?,?,?,1)",(None, name, 'MASTERLEAF'))
     con.commit()
 
-def add_leaf(mapId: str,name: list[str], info = ''):
-    print(mapId, name)
+def get_master_leaf(name: str):
     con = get_db()
     cur = con.cursor()
     ## Get the master node
-    row = query_db('SELECT * FROM nodes WHERE isMaster=1 AND name = ?', [mapId], one=True)
+    row = query_db('SELECT * FROM nodes WHERE isMaster=1 AND name = ?', [name], one=True)
     if row is None: raise MapNotFound()
-    idToFetch = row['node_id']
+    return row
+
+def add_leaf(mapId: str,name: list[str], info = ''):
+    
+    ## Get the master node
+    idToFetch = get_master_leaf(mapId)['node_id']
 
     ## Go to the bottom leaf if path exist:
     while len(name) > 1:
@@ -71,17 +75,19 @@ def add_leaf(mapId: str,name: list[str], info = ''):
     leafNameToAdd = name.pop(0)
     row = query_db('SELECT * FROM nodes INNER JOIN nodes_link ON nodes_link.child_id = nodes.node_id WHERE parent_id=? AND name=?', (idToFetch,leafNameToAdd), one=True)
     if row : raise LeafExist()
+
+    con = get_db()
+    cur = con.cursor()
     cur.execute("INSERT INTO nodes VALUES (?,?,?,0)",(None, leafNameToAdd, info))
     row = query_db('SELECT name, info FROM nodes WHERE node_id=last_insert_rowid()',one=True)
     cur.execute("INSERT INTO nodes_link VALUES (?,?)",(idToFetch, cur.lastrowid))
     con.commit()
+    
     return """{{"leaf": "{name}", "text": "{info}"}}""".format(
             name=row['name'], info=row['info'])
 
 def get_leaf(mapId: str, name: list[str], toString=False):
-    row = query_db('SELECT * FROM nodes WHERE isMaster=1 AND name = ?', [mapId], one=True)
-    if row is None: raise MapNotFound
-    idToFetch = row['node_id']
+    idToFetch = get_master_leaf(mapId)['node_id']
     while len(name) > 0:
         nameToFetch = name.pop(0)
         row = query_db('SELECT * FROM nodes INNER JOIN nodes_link ON nodes_link.child_id = nodes.node_id WHERE parent_id=? AND name=?', (idToFetch,nameToFetch), one=True)
