@@ -1,3 +1,53 @@
+# How to use it
+
+## Start the app
+Start the app by starting the run.sh in the bin folder
+### Create a mind map
+
+```bash
+curl -X POST localhost:5000 -H 'content-type: application/json' -d '{"id": "my-map"}'
+```
+
+### Add a leaf (path) to the map
+
+```bash
+$ curl -X POST localhost:5000 \
+  -H 'content-type: application/json' \
+  -d '{
+    "path": "i/like/potatoes",
+    "text": "Because reasons"
+}'
+```
+
+### Read a leaf (path) of the map
+
+```bash
+$ curl -X GET localhost:5000 -H 'content-type: application/json'
+
+Expected response:
+{
+    "path": "i/like/potatoes",
+    "text": "Because reasons"
+}
+```
+
+### Pretty print the whole tree of the mind map
+
+```bash
+$ curl -X GET localhost:5000
+
+Expected output:
+root/
+    i/
+        like/
+            potatoes
+        eat/
+            tomatoes
+```
+<br>
+<br>
+
+
 # Mind Map API
 
 We want you to design a [mind map](https://en.wikipedia.org/wiki/Mind_map) web service.
