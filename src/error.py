@@ -1,5 +1,3 @@
-import sqlite3
-
 class CustomExeptions(Exception):
     code = 500
 
