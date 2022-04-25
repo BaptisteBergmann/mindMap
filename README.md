@@ -11,7 +11,7 @@ curl -X POST localhost:5000 -H 'content-type: application/json' -d '{"id": "my-m
 ### Add a leaf (path) to the map
 
 ```bash
-$ curl -X POST localhost:5000 \
+$ curl -X POST localhost:5000/<MapId> \
   -H 'content-type: application/json' \
   -d '{
     "path": "i/like/potatoes",
@@ -22,7 +22,7 @@ $ curl -X POST localhost:5000 \
 ### Read a leaf (path) of the map
 
 ```bash
-$ curl -X GET localhost:5000 -H 'content-type: application/json'
+$ curl -X GET localhost:5000/<LeafPath> -H 'content-type: application/json'
 
 Expected response:
 {
@@ -34,7 +34,7 @@ Expected response:
 ### Pretty print the whole tree of the mind map
 
 ```bash
-$ curl -X GET localhost:5000
+$ curl -X GET localhost:5000/<MapId> #(/<LeafPath> (opt) if you want to print from one leaf)
 
 Expected output:
 root/
